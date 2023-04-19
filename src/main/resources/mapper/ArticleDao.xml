@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="tech.hirsun.project.comp3334.sandy_elearning.dao.ArticleDao">
+    <resultMap type="tech.hirsun.project.comp3334.sandy_elearning.entity.Article" id="ArticleResult">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="title" column="title" jdbcType="VARCHAR"/>
+        <result property="content" column="content" jdbcType="VARCHAR"/>
+        <result property="author" column="author" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <select id="getArticles" parameterType="Map" resultMap="ArticleResult">
+        select id,title, author, create_time, update_time from `sandy-server`.article
+        where is_deleted = 0
+        order by update_time desc
+        <if test="start != null and limit !=null">
+            limit #{start},#{limit}
+        </if>
+    </select>
+
+    <insert id="insertArticle" useGeneratedKeys="true" keyProperty="id" parameterType="tech.hirsun.project.comp3334.sandy_elearning.entity.Article">
+        insert into
+            `sandy-server`.article(title,content,author)
+        values(#{title},#{content},#{author})
+    </insert>
+
+    <update id="updateArticle" parameterType="tech.hirsun.project.comp3334.sandy_elearning.entity.Article">
+        update `sandy-server`.article
+        set
+            title=#{title},content=#{content},
+            author=#{author},update_time=#{updateTime}
+        where id=#{id}
+    </update>
+
+    <update id="deleteArticle" parameterType="int">
+        update `sandy-server`.article
+        set is_deleted=1
+        where id=#{id}
+    </update>
+
+    <select id="getArticleById" parameterType="int" resultMap="ArticleResult">
+        select id,title,content,author,create_time,update_time
+        from `sandy-server`.article where id=#{id} and is_deleted=0
+    </select>
+
+    <update id="deleteBatch">
+        update `sandy-server`.article
+        set is_deleted=1 where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <select id="getTotalArticles" parameterType="Map" resultType="int">
+        select count(*) from `sandy-server`.article
+        where is_deleted=0
+        <if test="keyword != null and keyword.trim() != ''">
+            and `sandy-server`.article.title LIKE CONCAT(CONCAT('%', #{keyword}), '%')
+        </if>
+        <if test="startTime != null and startTime.trim() != ''">
+            and create_time &gt; #{startTime}
+        </if>
+        <if test="endTime != null and endTime.trim() != ''">
+            and create_time &lt; #{endTime}
+        </if>
+    </select>
+
+
+</mapper>

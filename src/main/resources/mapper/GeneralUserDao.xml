@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="tech.hirsun.project.comp3334.sandy_elearning.dao.GeneralUserDao">
+    <resultMap type="tech.hirsun.project.comp3334.sandy_elearning.entity.GeneralUser" id="GeneralUserResult">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+        <result property="password" column="password_md5" jdbcType="VARCHAR"/>
+        <result property="userToken" column="user_token" jdbcType="VARCHAR"/>
+        <result property="isDeleted" column="is_deleted" jdbcType="TINYINT"/>
+        <result property="isStudent" column="is_student" jdbcType="TINYINT"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <insert id="insertUser" parameterType="tech.hirsun.project.comp3334.sandy_elearning.entity.GeneralUser">
+        insert into `sandy-server`.general_user(user_name,password_md5,is_student)
+        values(#{userName},#{password},1)
+    </insert>
+
+    <select id="getGeneralUsers" parameterType="Map" resultMap="GeneralUserResult">
+        select id,user_name,create_time,is_student from `sandy-server`.general_user
+        where is_deleted=0
+        order by id desc
+        <if test="start!=null and limit!=null">
+            limit #{start},#{limit}
+        </if>
+    </select>
+
+    <select id="getGeneralUserById" resultMap="GeneralUserResult">
+        select id, user_name,user_token, is_student
+        from `sandy-server`.general_user
+        where id=#{id}
+          and is_deleted = 0
+        ORDER BY  id DESC limit 1
+    </select>
+
+    <select id="getGeneralUserByToken" resultMap="GeneralUserResult">
+        select id,user_name,user_token,is_student
+        from `sandy-server`.general_user
+        where user_token = #{userToken}
+          and is_deleted = 0
+        ORDER BY  id DESC limit 1
+    </select>
+
+    <select id="getGeneralUserByUserName" resultMap="GeneralUserResult">
+        select id,user_name,user_token,is_student
+        from `sandy-server`.general_user
+        where user_name = #{userName}
+          and is_deleted = 0
+        ORDER BY  id DESC limit 1
+    </select>
+
+    <update id="updateUserToken">
+        update `sandy-server`.general_user set user_token = #{newToken} where id =#{userId} and is_deleted = 0
+    </update>
+
+    <select id="getTotalGeneralUsers" parameterType="Map" resultType="int">
+        select count(*) from `sandy-server`.general_user
+        where is_deleted=0
+    </select>
+
+    <select id="getGeneralUserByUserNameAndPassword" resultMap="GeneralUserResult">
+        select id,user_name,user_token,is_student
+        from `sandy-server`.general_user
+        where user_name = #{userName} and password_md5 = #{passwordMD5}
+          and is_deleted = 0
+        ORDER BY  id DESC limit 1
+    </select>
+
+    <update id="deleteBatch">
+        update `sandy-server`.general_user
+        set is_deleted=1 where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <update id="updateGeneralUserPassword">
+        update `sandy-server`.general_user set password_md5 = #{newPassword},user_token ='' where id =#{userId} and is_deleted = 0
+    </update>
+
+</mapper>
