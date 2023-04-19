@@ -11,9 +11,8 @@ This project aims to establish a decentralized education platform that will offe
 
 The project provides a new solution for developing higher education by creating a secure, replicable, fast, decentralized education resource-sharing platform rather than providing a specific software. This platform enables easy access to educational resources and fosters seamless knowledge-sharing among learners and educators, promoting a more equitable and democratic approach to education.
 
-- Demo Website: https://dapp-sandy.hanjiaming.eu.org/ (PolyU Connect ID SSO)
+- Demo Website: https://sandy.hanjiaming.eu.org/ (PolyU Connect ID SSO)
 - Github Repository: https://github.com/guomaimang/Sandy_E-Learning
-- [Blockchain Contract Logs](https://polygonscan.com/address/0xda7521f5cd54a0d2ddbaeddee280648a8c71107c)
 
 ![1681890308123.png](https://static-file.hirsun.tech/2023/04/19/d4fcf7e9cde39.png)
 
