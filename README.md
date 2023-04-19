@@ -15,6 +15,7 @@ The project provides a new solution for developing higher education by creating 
 - Github Repository: https://github.com/guomaimang/Sandy_E-Learning
 - [Blockchain Contract Logs](https://polygonscan.com/address/0xda7521f5cd54a0d2ddbaeddee280648a8c71107c)
 
+![1681890308123.png](https://static-file.hirsun.tech/2023/04/19/d4fcf7e9cde39.png)
 
 ## Basic Requirement
  
@@ -53,7 +54,6 @@ The project provides a new solution for developing higher education by creating 
     - Strict and standardized Restful architecture
     - Complete front and back-end separation
 
-![1681890308123.png](https://static-file.hirsun.tech/2023/04/19/d4fcf7e9cde39.png)
 
 ![1681890498009.png](https://static-file.hirsun.tech/2023/04/19/bdd816de1f7e8.png)
 
