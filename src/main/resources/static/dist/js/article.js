@@ -1,37 +1,27 @@
 var editorD;
 
 $(function () {
-    //隐藏错误提示框
+
     $('.alert-danger').css("display", "none");
 
-    //富文本编辑器
     const E = window.wangEditor;
     editorD = new E('#wangEditor')
-    // 设置编辑区域高度为 400px
     editorD.config.height = 400
-    //配置服务端图片上传地址
     editorD.config.uploadImgServer = 'images/upload'
     editorD.config.uploadFileName = 'file'
-    //限制图片大小 2M
     editorD.config.uploadImgMaxSize = 2 * 1024 * 1024
-    //限制一次最多能传几张图片 一次最多上传 1 个图片
     editorD.config.uploadImgMaxLength = 1
-    //隐藏插入网络图片的功能
     editorD.config.showLinkImg = false
     editorD.config.uploadImgHooks = {
-        // 图片上传并返回了结果，图片插入已成功
         success: function (xhr) {
             console.log('success', xhr)
         },
-        // 图片上传并返回了结果，但图片插入时出错了
         fail: function (xhr, editor, resData) {
             console.log('fail', resData)
         },
-        // 上传图片出错，一般为 http 请求的错误
         error: function (xhr, editor, resData) {
             console.log('error', xhr, resData)
         },
-        // 上传图片超时
         timeout: function (xhr) {
             console.log('timeout')
         },
@@ -80,7 +70,6 @@ $(function () {
             order: "order",
         },
         gridComplete: function () {
-            //隐藏grid底部滚动条
             $("#jqGrid").closest(".ui-jqgrid-bdiv").css({"overflow-x": "hidden"});
         },
     });
@@ -89,11 +78,8 @@ $(function () {
     });
 });
 
-//绑定modal上的保存按钮
 $('#saveButton').click(function () {
-    //验证数据
     if (validObject()) {
-        //一切正常后发送网络请求
         //ajax
         var id = $("#articleId").val();
         var title = $("#articleName").val();
@@ -102,15 +88,14 @@ $('#saveButton').click(function () {
         var data = {"title": title, "content": content, "author": getCookie("userName")};
         var url = 'articles/add';
         var method = 'POST';
-        //id>0表示编辑操作
         if (id > 0) {
             data = {"id": id, "title": title, "content": content, "author": getCookie("userName")};
             url = 'articles/update';
             method = 'PUT';
         }
         $.ajax({
-            type: method,//方法类型
-            dataType: "json",//预期服务器返回的数据类型
+            type: method,
+            dataType: "json",
             url: url,//url
             contentType: "application/json; charset=utf-8",
             beforeSend: function (request) {
@@ -159,10 +144,8 @@ function articleEdit() {
     if (id == null) {
         return;
     }
-    //请求数据
     $.get("articles/info/" + id, function (r) {
         if (r.resultCode == 200 && r.data != null) {
-            //填充数据至modal
             $('#articleId').val(r.data.id);
             $('#articleName').val(r.data.title);
             $('#articleAuthor').val(r.data.author);
@@ -207,9 +190,7 @@ function validObject() {
  * 重置
  */
 function reset() {
-    //隐藏错误提示框
     $('.alert-danger').css("display", "none");
-    //清空数据
     $('#articleId').val(0);
     $('#articleName').val('');
     $('#articleAuthor').val('');
@@ -234,7 +215,6 @@ function deleteArticle() {
                 url: "articles/delete",
                 contentType: "application/json",
                 beforeSend: function (request) {
-                    //设置header值
                     request.setRequestHeader("token", getCookie("token"));
                 },
                 data: JSON.stringify(ids),
@@ -256,9 +236,7 @@ function deleteArticle() {
     });
 }
 
-/**
- * jqGrid重新加载
- */
+
 function reload() {
     reset();
     var page = $("#jqGrid").jqGrid('getGridParam', 'page');

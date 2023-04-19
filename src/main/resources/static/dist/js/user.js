@@ -40,7 +40,6 @@ $(function () {
             order: "order"
         },
         gridComplete: function () {
-            //隐藏grid底部滚动条
             $("#jqGrid").closest(".ui-jqgrid-bdiv").css({"overflow-x": "hidden"});
         }
     });
@@ -70,27 +69,23 @@ function userEdit() {
     $('#modalEdit').modal('show');
 }
 
-//绑定modal上的保存按钮
 $('#saveButton').click(function () {
-    //验证数据
     if (validObjectForAdd()) {
-        //一切正常后发送网络请求
         //ajax
         var userName = $("#userName").val();
         var password = $("#password").val();
         var data = {"userName": userName, "password": password};
         $.ajax({
-            type: 'POST',//方法类型
-            dataType: "json",//预期服务器返回的数据类型
-            url: 'users/add',//url
+            type: 'POST',
+            dataType: "json",
+            url: 'users/add',
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(data),
             beforeSend: function (request) {
-                //设置header值
                 request.setRequestHeader("token", getCookie("token"));
             },
             success: function (result) {
-                console.log(result);//打印服务端返回的数据
+                console.log(result);
                 checkResultCode(result.resultCode);
                 if (result.resultCode == 200) {
                     swal("Save successfully", {
@@ -118,27 +113,23 @@ $('#saveButton').click(function () {
     }
 });
 
-//绑定modal上的编辑按钮
 $('#editButton').click(function () {
-    //验证数据
     if (validObjectForEdit()) {
-        //一切正常后发送网络请求
         var password = $("#passwordEdit").val();
         var id = $("#userId").val();
         var data = {"id": id, "password": password};
         $.ajax({
-            type: 'PUT',//方法类型
-            dataType: "json",//预期服务器返回的数据类型
+            type: 'PUT',
+            dataType: "json",
             url: 'users/updatePassword',//url
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(data),
             beforeSend: function (request) {
-                //设置header值
                 request.setRequestHeader("token", getCookie("token"));
             },
             success: function (result) {
                 checkResultCode(result.resultCode);
-                console.log(result);//打印服务端返回的数据
+                console.log(result);
                 if (result.resultCode == 200) {
                     swal("修改成功", {
                         icon: "success",
@@ -165,9 +156,7 @@ $('#editButton').click(function () {
     }
 });
 
-/**
- * 用户删除
- */
+
 function userDel() {
     var ids = getSelectedRows();
     if (ids == null) {
@@ -187,7 +176,6 @@ function userDel() {
                     contentType: "application/json",
                     data: JSON.stringify(ids),
                     beforeSend: function (request) {
-                        //设置header值
                         request.setRequestHeader("token", getCookie("token"));
                     },
                     success: function (r) {
@@ -209,9 +197,7 @@ function userDel() {
     );
 }
 
-/**
- * 数据验证
- */
+
 function validObjectForAdd() {
     var userName = $('#userName').val();
     if (isNull(userName)) {
@@ -234,9 +220,7 @@ function validObjectForAdd() {
     return true;
 }
 
-/**
- * 数据验证
- */
+
 function validObjectForEdit() {
     var userId = $('#userId').val();
     if (isNull(userId) || userId < 1) {
@@ -255,9 +239,7 @@ function validObjectForEdit() {
     return true;
 }
 
-/**
- * 重置
- */
+
 function reset() {
     //隐藏错误提示框
     $('.alert-danger').css("display", "none");
@@ -268,9 +250,7 @@ function reset() {
     $('#userId').val(0);
 }
 
-/**
- * jqGrid重新加载
- */
+
 function reload() {
     reset();
     var page = $("#jqGrid").jqGrid('getGridParam', 'page');
