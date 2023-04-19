@@ -1,1 +1,3 @@
-# Sandy_E-learning_Public
+# Sandy_E-Learning
+
+COMP3334 Project
