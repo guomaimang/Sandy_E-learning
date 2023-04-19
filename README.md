@@ -56,3 +56,51 @@ The project provides a new solution for developing higher education by creating 
 ![1681890308123.png](https://static-file.hirsun.tech/2023/04/19/d4fcf7e9cde39.png)
 
 ![1681890498009.png](https://static-file.hirsun.tech/2023/04/19/bdd816de1f7e8.png)
+
+
+```
+SandyELearningApplication.java: Main entry point for the application.
+
+common: Contains common utility classes.
+├── Constants.java: Holds constant values used throughout the application.
+├── Result.java: Represents the result of an operation.
+├── ResultGenerator.java: Generates results based on certain conditions.
+
+config: Contains configuration classes and handlers.
+├── SpringBootWebMvcConfigurer.java: Configures the Spring Boot Web MVC framework.
+├── annotation: Contains custom annotations.
+└── TokenToUser.java: Custom annotation for token to user conversion.
+├── handler: Contains custom handlers.
+└── TokenToUserMethodArgumentResolver.java: Resolves method arguments for token to user conversion.
+
+controller: Contains controller classes for handling HTTP requests.
+├── ArticleController.java: Handles requests related to articles.
+├── GeneralUserController.java: Handles requests related to general users.
+├── Oauth2Controller.java: Handles OAuth2 authentication requests.
+
+dao: Contains Data Access Object (DAO) classes for database operations.
+├── ArticleDao.java: Performs database operations for articles.
+├── GeneralUserDao.java: Performs database operations for general users.
+
+entity: Contains entity classes representing database tables.
+├── Article.java: Represents the Article table.
+├── GeneralUser.java: Represents the GeneralUser table.
+
+service: Contains service classes for business logic.
+├── ArticleService.java: Interface for article-related services.
+├── GeneralUserService.java: Interface for general user-related services.
+└── Impl: Contains service implementations.
+├── ArticleServiceImpl.java: Implements the ArticleService interface.
+└── GeneralUserServiceImpl.java: Implements the GeneralUserService interface.
+
+utils: Contains various utility classes.
+├── CloudNoteContract.java: Utility for working with CloudNote contracts.
+├── DateUtil.java: Utility for date-related operations.
+├── MD5Util.java: Utility for MD5 hashing.
+├── NumberUtil.java: Utility for number-related operations.
+├── PageResult.java: Represents paginated results.
+├── PageUtil.java: Utility for pagination operations.
+├── SystemUtil.java: Utility for system-related operations.
+└── Web3jClient.java: Utility for interacting with the Ethereum blockchain using Web3j.
+```
+
